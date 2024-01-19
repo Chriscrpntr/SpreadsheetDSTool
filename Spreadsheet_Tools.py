@@ -8,7 +8,7 @@ import os
 def sheets_to_one():
     root = tk.Tk()
     root.withdraw()
-
+    root.attributes('-topmost', True)  # This line will make the dialog appear on top
     file_path = filedialog.askopenfilename()
 
     old = openpyxl.load_workbook(file_path, data_only=True)
@@ -22,25 +22,43 @@ def sheets_to_one():
         rows_list = []
         for row in data:
             rows_list.append([cell.value for cell in row])
-
         if transposeq == 'y':  
             df = pd.DataFrame(rows_list).transpose()
+        else:
+            df = pd.DataFrame(rows_list)
         all_data.append(df)
     final_df = pd.concat(all_data)
-    final_df.to_excel(file_path + "_Spreadsheet_Tools", index=False)
+    final_df.to_excel(file_path + "_Spreadsheet_Tools.xlsx", index=False)
+
+
+def books_to_one():
+    root = tk.Tk()
+    root.withdraw()
+    root.attributes('-topmost', True)  # This line will make the dialog appear on top
+    folder_path = filedialog.askdirectory()
+    files = os.listdir(folder_path)
+    files_xlsx = [f for f in files if f[-4:] == 'xlsx']
+    wb = openpyxl.load_workbook(folder_path + "/" + files_xlsx[0], data_only=True)
+    ws = wb.active
+    ws.title = "All Data"
+    for file in files_xlsx[1:]:
+        workbook = openpyxl.load_workbook(folder_path + "/" + file, data_only=True)
+        for worksheet in workbook.worksheets:
+            for row in worksheet.iter_rows():
+                values = [cell.value for cell in row]
+                ws.append(values)
+    wb.save(folder_path + "/" + "All_Data.xlsx")
+    wb.close()
+    workbook.close()
+
 
 def help(option):
     if option == '2':
-        print("Many books to one takes a folder of xlsx files and appends the sheets vertically into a single workbook/sheet.")
+        print("Many books to one takes a folder of xlsx files and appends the sheets vertically into a single workbook/sheet\nWarning only pulls the first sheet.")
     if option == '1':
         print("Many sheets to one takes a specific range and takes all sheets in the workbook at vertically appends them all into a single new workbook/sheet. There is an option to transpose the data")
-    elif option == '0':
-        print("Option 0: This option does...")
     else:
         print("Invalid option")
-
-def books_to_one():
-    print()
 
 def main():
     print("""
