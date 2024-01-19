@@ -94,7 +94,7 @@ def main():
         |_|                                                                      
    
         """)
-    choice = input("What do you want to do?\n1. many sheets to one\n2. many workbooks to one\n0. exit\n\nhelp example: help 1\n\n")
+    choice = input("What would you like to do?\n1. many sheets to one\n2. many workbooks to one\n0. exit\n\nhelp example: help 1\n\n")
     if choice.startswith('help'):
         _, option = choice.split()
         help(option)
