@@ -6,6 +6,11 @@ import os
 
 
 def sheets_to_one():
+    """
+    parameters: none
+    returns: none
+    description: takes a single xlsx file and appends the sheets vertically into a single workbook/sheet
+    """
     root = tk.Tk()
     root.withdraw()
     root.attributes('-topmost', True)  # This line will make the dialog appear on top
@@ -32,9 +37,14 @@ def sheets_to_one():
 
 
 def books_to_one():
+    """
+    parameters: none
+    returns: none
+    description: takes a folder of xlsx files and appends the sheets vertically into a single workbook/sheet
+    """
     root = tk.Tk()
     root.withdraw()
-    root.attributes('-topmost', True)  # This line will make the dialog appear on top
+    root.attributes('-topmost', True)
     folder_path = filedialog.askdirectory()
     files = os.listdir(folder_path)
     files_xlsx = [f for f in files if f[-4:] == 'xlsx']
