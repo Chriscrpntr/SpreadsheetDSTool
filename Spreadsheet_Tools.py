@@ -13,12 +13,11 @@ def sheets_to_one():
     """
     root = tk.Tk()
     root.withdraw()
-    root.attributes('-topmost', True)  # This line will make the dialog appear on top
+    root.attributes('-topmost', True)
     file_path = filedialog.askopenfilename()
 
     old = openpyxl.load_workbook(file_path, data_only=True)
-    new = openpyxl.Workbook()
-    cell_range = input("What cell range do you want to pull from? (ex. A1:O100)\n")
+    cell_range = input("What cell range do you want to pull from? (ex. A1:B100)\n")
 
     all_data = []
     transposeq = input("Do you want to transpose the data? (y/n)\n")
@@ -37,6 +36,8 @@ def sheets_to_one():
         else:
             df = pd.DataFrame(rows_list)
         all_data.append(df)
+        #Add sheet name to dataframe
+        df['Sheet'] = sheet.title
     final_df = pd.concat(all_data)
     final_df.to_excel(file_path + "_Spreadsheet_Tools.xlsx", index=False)
 
