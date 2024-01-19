@@ -56,12 +56,18 @@ def books_to_one():
     wb = openpyxl.load_workbook(folder_path + "/" + files_xlsx[0], data_only=True)
     ws = wb.active
     ws.title = "All Data"
+    ignoreq = input("Do you want to drop empty rows? (y/n)\n")
     for file in files_xlsx[1:]:
         workbook = openpyxl.load_workbook(folder_path + "/" + file, data_only=True)
         for worksheet in workbook.worksheets:
             for row in worksheet.iter_rows():
-                values = [cell.value for cell in row]
-                ws.append(values)
+                if ignoreq == 'y':
+                    if not all(cell.value is None for cell in row):
+                        values = [cell.value for cell in row]
+                        ws.append(values)
+                else:
+                    values = [cell.value for cell in row]
+                    ws.append(values)
     wb.save(folder_path + "/" + "All_Data.xlsx")
     wb.close()
     workbook.close()
