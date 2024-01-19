@@ -22,11 +22,16 @@ def sheets_to_one():
 
     all_data = []
     transposeq = input("Do you want to transpose the data? (y/n)\n")
+    ignoreq = input("Do you want to drop empty rows? (y/n)\n")
     for sheet in old.worksheets:
         data = sheet[cell_range]
         rows_list = []
         for row in data:
-            rows_list.append([cell.value for cell in row])
+            if ignoreq == 'y':
+                if not all(cell.value is None for cell in row):
+                    rows_list.append([cell.value for cell in row])
+            else:
+                rows_list.append([cell.value for cell in row])
         if transposeq == 'y':  
             df = pd.DataFrame(rows_list).transpose()
         else:
@@ -83,7 +88,7 @@ def main():
         |_|                                                                      
    
         """)
-    choice = input("What do you want to do?\nhelp. example help 1\n1. many sheets to one\n2. many workbooks to one\n0. exit\n")
+    choice = input("What do you want to do?\n1. many sheets to one\n2. many workbooks to one\n0. exit\n\nhelp example: help 1\n\n")
     if choice.startswith('help'):
         _, option = choice.split()
         help(option)
