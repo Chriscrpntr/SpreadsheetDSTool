@@ -5,7 +5,7 @@ from tkinter import filedialog
 import os
 
 
-def hundredS_to_one():
+def sheets_to_one():
     root = tk.Tk()
     root.withdraw()
 
@@ -27,16 +27,20 @@ def hundredS_to_one():
             df = pd.DataFrame(rows_list).transpose()
         all_data.append(df)
     final_df = pd.concat(all_data)
-    final_df.to_excel('fixed.xlsx', index=False)
+    final_df.to_excel(file_path + "_Spreadsheet_Tools", index=False)
 
 def help(option):
+    if option == '2':
+        print("Many books to one takes a folder of xlsx files and appends the sheets vertically into a single workbook/sheet.")
     if option == '1':
-        print("Option 1: This option does...")
+        print("Many sheets to one takes a specific range and takes all sheets in the workbook at vertically appends them all into a single new workbook/sheet. There is an option to transpose the data")
     elif option == '0':
         print("Option 0: This option does...")
     else:
         print("Invalid option")
 
+def books_to_one():
+    print()
 
 def main():
     print("""
@@ -51,16 +55,17 @@ def main():
         |_|                                                                      
    
         """)
-    choice = input("What do you want to do?\nhelp. example help 1\n1. many to one\n0. exit\n")
+    choice = input("What do you want to do?\nhelp. example help 1\n1. many sheets to one\n2. many workbooks to one\n0. exit\n")
     if choice.startswith('help'):
         _, option = choice.split()
         help(option)
     if choice == '1':
-        hundredS_to_one()
+        sheets_to_one()
+    if choice =='2':
+        books_to_one()
     if choice == '0':
         os.system('cls' if os.name == 'nt' else 'clear')
         exit()
-        
     else:
         os.system('cls' if os.name == 'nt' else 'clear')
         main()
