@@ -4,7 +4,10 @@ Current tool list
 
 1. many sheets to one
 
-Takes many sheets across the workbook of the same range and appends them into a single sheet. Optional to transpose or not transpose.
+Takes many sheets across the workbook of the same range and appends them into a single sheet. 
+Optional
+Transpose or not transpose.
+Drop blank rows during processing or not.
 
 2. many books to one
 
